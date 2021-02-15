@@ -1,23 +1,28 @@
+<?php
+$filename = "Calculator_QE: ax^2+ bx +c = 0";
+echo $filename;
+echo '';
+?>
+
 <form action="" style="" method="get">
-    <label>number1: </label>
+    <label>a: </label>
     <input type="number" name="number-1" value="">
     <label> operation: </label>
     <select name="operator" id="">
         <option value="+" selected>+</option>
-        <option value="-" selected>-</option>
     </select>
-    <label>number2: </label>
+    <label>b: </label>
         <input type="number" name="number-2" value="">
     <label> operation: </label>
     <select name="operator" id="">
         <option value="+" selected>+</option>
-        <option value="-" selected>-</option>
     </select>
+    <label>c: </label>
     <input type="number" name="number-3" value="">
     <button type="submit">submit</button>
 </form>
 <br>
-<div id="x"></div>
+<div id="x1"></div>
 
 <?php
 
@@ -29,37 +34,53 @@ error_reporting(E_ALL);
 
 <?php
 
-$filename = "Calculator_QE";
-echo $filename;
-
 $a = '';
 $b = '';
 $c = '';
+$result = '';
+$Discriminant = '';
 
 $a = $_GET['number-1'];
 $b = $_GET['number-2'];
 $c = $_GET['number-3'];
-$operator = $_GET['operator']; 
+$operator = $_GET['operator'];
+$allowed_operations = ['+' => '+'];
 
-if (array_key_exists('number-1', $_GET) &&
-    array_key_exists('number-2', $_GET) &&
-    array_key_exists('number-3', $_GET)) {
-
-    if (isValueInt($a) &&
-        isValueInt($b) &&
-        isValueInt($c) &&
-        array_key_exists($operator, $x)
-    ) {
-        
-        if ($a > 0 || $a < 0) {
-            function EquationValue ($a, $b, $c) {
-                $x = $a + $b;
-                return $x;
-            }
-            echo  '$x';
-        }
-
+function isValueInt($value) {
+    if ((int) $value > 0 || $value === "0") {
+        return true;
     }
+    return false;
 }
-       
-?>
+
+function isDiscriminantValue ($a, $b, $c) {
+    $Discriminant = $b**2 - (4*$a*$c);
+    }
+    return $Discriminant;
+
+    if (array_key_exists('number-1', $_GET) &&
+        array_key_exists('number-2', $_GET) &&
+        array_key_exists('number-3', $_GET) && 
+
+        isset($_GET['number-1']) && isValueInt($_GET['number-1']) && 
+        isset($_GET['number-2']) && isValueInt($_GET['number-2']) && 
+        isset($_GET['number-3']) && isValueInt($_GET['number-3']) &&
+
+        isDiscriminantValue ($_GET['number-1'], $_GET['number-2'], $_GET['number-3'])
+
+        ) {
+
+        if ($Discriminant === 0 && $a > 0 || $a < 0){           
+            echo 'x=' . -$b / (2 * $a);
+            }
+   
+        elseif ($Discriminant > 0 && $a > 0 || $a < 0) {
+           echo 'x1=' . -$b + sqrt($b**2 - 4*$a*$c) / 2*$a . 'x2=' . -$b - sqrt($b**2 - 4*$a*$c) / 2*$a;
+            }
+
+        elseif ($Discriminant < 0 && $a > 0 || $a < 0) {
+            echo 'x1=God knows';
+            echo 'x2=God knows';
+        }
+    }
+?> 
