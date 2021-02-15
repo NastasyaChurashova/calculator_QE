@@ -37,7 +37,8 @@ error_reporting(E_ALL);
 $a = '';
 $b = '';
 $c = '';
-$result = '';
+$x1 = '';
+$x2 = '';
 $Discriminant = '';
 
 $a = $_GET['number-1'];
@@ -46,41 +47,44 @@ $c = $_GET['number-3'];
 $operator = $_GET['operator'];
 $allowed_operations = ['+' => '+'];
 
-function isValueInt($value) {
+/*function isValueInt($value) {
     if ((int) $value > 0 || $value === "0") {
         return true;
     }
     return false;
 }
 
+
 function isDiscriminantValue ($a, $b, $c) {
-    $Discriminant = $b**2 - (4*$a*$c);
-    }
+    $Discriminant = $_GET['number-2']**2 - (4*$_GET['number-1']*$_GET['number-3']);
     return $Discriminant;
+}
+*/
 
-    if (array_key_exists('number-1', $_GET) &&
-        array_key_exists('number-2', $_GET) &&
-        array_key_exists('number-3', $_GET) && 
+$Discriminant = $_GET['number-2']**2 - (4*$_GET['number-1']*$_GET['number-3']);
 
-        isset($_GET['number-1']) && isValueInt($_GET['number-1']) && 
-        isset($_GET['number-2']) && isValueInt($_GET['number-2']) && 
-        isset($_GET['number-3']) && isValueInt($_GET['number-3']) &&
+if (array_key_exists('number-1', $_GET) &&
+    array_key_exists('number-2', $_GET) &&
+    array_key_exists('number-3', $_GET) && 
 
-        isDiscriminantValue ($_GET['number-1'], $_GET['number-2'], $_GET['number-3'])
-
-        ) {
-
-        if ($Discriminant === 0 && $a > 0 || $a < 0){           
+    isset($_GET['number-1']) && 
+    isset($_GET['number-2']) && 
+    isset($_GET['number-3']))  {
+        
+        if ($Discriminant === 0){           
             echo 'x=' . -$b / (2 * $a);
             }
    
-        elseif ($Discriminant > 0 && $a > 0 || $a < 0) {
-           echo 'x1=' . -$b + sqrt($b**2 - 4*$a*$c) / 2*$a . 'x2=' . -$b - sqrt($b**2 - 4*$a*$c) / 2*$a;
+        elseif ($Discriminant > 0) {
+            $x1 = (-$b + sqrt($b**2 - 4*$a*$c)) / (2*$a);
+            $x2 = (-$b - sqrt($b**2 - 4*$a*$c)) / (2*$a);
+            echo  "x1 = $x1  "; 
+            echo  "x2 = $x2";
             }
 
-        elseif ($Discriminant < 0 && $a > 0 || $a < 0) {
-            echo 'x1=God knows';
-            echo 'x2=God knows';
+        elseif ($Discriminant < 0) {
+            echo "no roots" ;
+            
         }
     }
 ?> 
