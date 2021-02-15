@@ -28,8 +28,6 @@ error_reporting(E_ALL);
 ?>
 
 <?php
-
-
 $filename = "Calculator_QE";
 echo $filename;
 
